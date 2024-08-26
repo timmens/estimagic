@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from optimagic import OptimizeLogReader as _OptimizeLogReader
 from optimagic import OptimizeResult as _OptimizeResult
-from optimagic import __version__, deprecations
+from optimagic import __version__
 from optimagic import check_constraints as _check_constraints
 from optimagic import convergence_plot as _convergence_plot
 from optimagic import convergence_report as _convergence_report
@@ -33,8 +33,6 @@ from estimagic.estimation_table import (
 )
 from estimagic.lollipop_plot import lollipop_plot
 from estimagic.msm_weighting import get_moments_cov
-
-deprecations.throw_deprecated_estimagic_installation_warning()
 
 MSG = (
     "estimagic.{name} has been deprecated in version 0.5.0. Use optimagic.{name} "
