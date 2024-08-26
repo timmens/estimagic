@@ -397,7 +397,9 @@ def throw_deprecated_estimagic_installation_warning():
         "For conda users, use:\n"
         "---------------------\n"
         "$ conda remove estimagic\n"
-        "$ conda install -c conda-forge optimagic\n"
+        "$ conda install -c conda-forge optimagic\n\n"
+        "For more details see the documentation: "
+        "https://optimagic.readthedocs.io/en/latest/installation.html"
     )
     warnings.warn(msg, FutureWarning)
 
