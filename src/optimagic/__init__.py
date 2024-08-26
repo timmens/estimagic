@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import warnings
+
 from optimagic import constraints, mark, utilities
 from optimagic.benchmarking.benchmark_reports import (
     convergence_report,
@@ -56,6 +58,24 @@ except ImportError:
     # broken installation, we don't even try unknown only works because we do poor mans
     # version compare
     __version__ = "unknown"
+
+installation_warning_message = (
+    "estimagic has been renamed to optimagic, but you have estimagic installed. Please "
+    "uninstall estimagic and install optimagic instead. Don't worry, your estimagic "
+    "imports will still work if you install optimagic, and simple warnings will help "
+    "you to adjust them for future releases.\n\n"
+    "To make these changes using pip, run:\n"
+    "-------------------------------------\n"
+    "$ pip uninstall estimagic\n"
+    "$ pip install optimagic\n\n"
+    "For conda users, use:\n"
+    "---------------------\n"
+    "$ conda remove estimagic\n"
+    "$ conda install -c conda-forge optimagic\n\n"
+    "For more details see the documentation: "
+    "https://optimagic.readthedocs.io/en/latest/installation.html"
+)
+warnings.warn(installation_warning_message, FutureWarning)
 
 
 __all__ = [
