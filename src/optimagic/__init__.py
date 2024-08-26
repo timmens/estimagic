@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from optimagic import constraints, mark, utilities
+from optimagic import constraints, deprecations, mark, utilities
 from optimagic.benchmarking.benchmark_reports import (
     convergence_report,
     rank_report,
@@ -56,6 +56,8 @@ except ImportError:
     # broken installation, we don't even try unknown only works because we do poor mans
     # version compare
     __version__ = "unknown"
+
+deprecations.throw_deprecated_estimagic_installation_warning()
 
 
 __all__ = [

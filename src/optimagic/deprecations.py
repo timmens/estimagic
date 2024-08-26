@@ -384,6 +384,24 @@ def throw_dict_constraints_future_warning_if_required(
         warnings.warn(msg, FutureWarning)
 
 
+def throw_deprecated_estimagic_installation_warning():
+    msg = (
+        "estimagic has been renamed to optimagic. Please uninstall estimagic and "
+        "install optimagic instead. Don't worry, your estimagic imports will still "
+        "work if you install optimagic, and simple warnings will help you to adjust "
+        "them for future releases.\n\n"
+        "To make these changes using pip, run:\n"
+        "-------------------------------------\n"
+        "$ pip uninstall estimagic\n"
+        "$ pip install optimagic\n\n"
+        "For conda users, use:\n"
+        "---------------------\n"
+        "$ conda remove estimagic\n"
+        "$ conda install -c conda-forge optimagic\n"
+    )
+    warnings.warn(msg, FutureWarning)
+
+
 def replace_and_warn_about_deprecated_multistart_options(options):
     """Replace deprecated multistart options and warn about them.
 
