@@ -2,19 +2,16 @@ import itertools
 import warnings
 
 import numpy as np
-import optimagic as om
 import pytest
 from numpy.testing import assert_array_almost_equal as aaae
+
+import optimagic as om
 from optimagic import maximize, minimize
-from optimagic.algorithms import AVAILABLE_ALGORITHMS
+from optimagic.algorithms import NonlinearConstrainedAlgorithms
 from optimagic.config import IS_CYIPOPT_INSTALLED
 from optimagic.parameters.bounds import Bounds
 
-NLC_ALGORITHMS = [
-    name
-    for name, algo in AVAILABLE_ALGORITHMS.items()
-    if algo.__algo_info__.supports_nonlinear_constraints
-]
+NLC_ALGORITHMS = NonlinearConstrainedAlgorithms()._available_algorithms_dict
 
 # ======================================================================================
 # Two-dimension example with equality and inequality constraints
@@ -40,7 +37,7 @@ def nlc_2d_example():
         return np.array([value - 1, 2 - value])
 
     def constraint_jac(x):
-        return 2 * np.row_stack((x.reshape(1, -1), -x.reshape(1, -1)))
+        return 2 * np.vstack((x.reshape(1, -1), -x.reshape(1, -1)))
 
     constraints_long = om.NonlinearConstraint(
         func=constraint_func,
@@ -124,7 +121,7 @@ def test_nonlinear_optimization(nlc_2d_example, algorithm, constr_type):
         warnings.simplefilter("ignore")
         result = maximize(algorithm=algorithm, **kwargs[constr_type])
 
-    if AVAILABLE_ALGORITHMS[algorithm].__algo_info__.is_global:
+    if NLC_ALGORITHMS[algorithm].algo_info.is_global:
         decimal = 0
     else:
         decimal = 4

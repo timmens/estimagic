@@ -10,6 +10,7 @@ import sys
 import numpy as np
 import pytest
 from numpy.testing import assert_array_almost_equal as aaae
+
 from optimagic import mark
 from optimagic.algorithms import AVAILABLE_ALGORITHMS, GLOBAL_ALGORITHMS
 from optimagic.optimization.optimize import minimize
@@ -27,7 +28,7 @@ GLOBAL_ALGORITHMS_AVAILABLE = [
 
 BOUNDED_ALGORITHMS = []
 for name, algo in LOCAL_ALGORITHMS.items():
-    if algo.__algo_info__.supports_bounds:
+    if algo.algo_info.supports_bounds:
         BOUNDED_ALGORITHMS.append(name)
 
 
@@ -85,3 +86,15 @@ def test_global_algorithms_on_sum_of_squares(algorithm):
     )
     assert res.success in [True, None]
     aaae(res.params, np.array([0.2, 0]), decimal=1)
+
+
+def test_nag_dfols_starting_at_optimum():
+    # From issue: https://github.com/optimagic-dev/optimagic/issues/538
+    params = np.zeros(2, dtype=float)
+    res = minimize(
+        fun=sos,
+        params=params,
+        algorithm="nag_dfols",
+        bounds=Bounds(-1 * np.ones_like(params), np.ones_like(params)),
+    )
+    aaae(res.params, params)

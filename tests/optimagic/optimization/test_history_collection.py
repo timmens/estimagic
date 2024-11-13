@@ -5,6 +5,7 @@ import numpy as np
 import pytest
 from numpy.testing import assert_array_almost_equal as aaae
 from numpy.testing import assert_array_equal as aae
+
 from optimagic import SQLiteLogReader, mark
 from optimagic.algorithms import AVAILABLE_ALGORITHMS
 from optimagic.logging import SQLiteLogOptions
@@ -16,7 +17,7 @@ from optimagic.typing import AggregationLevel
 OPTIMIZERS = []
 BOUNDED = []
 for name, algo in AVAILABLE_ALGORITHMS.items():
-    info = algo.__algo_info__
+    info = algo.algo_info
     if not info.disable_history:
         if info.supports_parallelism:
             OPTIMIZERS.append(name)
